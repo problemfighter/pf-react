@@ -1,7 +1,7 @@
 import React from 'react';
-import { PFProps, PFState } from '../data/pf-data-interface';
 import PFComponentState from '../component/pf-component-state';
 import PFReactComponent from "../component/pf-react-component";
+import {PFProps, PFState} from "../interface/pf-mixed-interface";
 
 
 class Props implements PFProps {

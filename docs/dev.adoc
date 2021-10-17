@@ -1,0 +1,10 @@
+
+```
+yarn add html-webpack-plugin --dev
+yarn add ts-loader --dev
+```
+
+```
+npm login
+npm publish
+```

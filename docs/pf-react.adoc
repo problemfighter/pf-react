@@ -14,6 +14,7 @@
 * PFComponent : This is the main component which will extends by all view, common functionality added here
 * PFComponentState : State variables with important data
 * PFReactComponent : This is the component which directly extends from React
+* PFLayoutRenderer : Responsible for Render the layout which will hold the view
 
 {blank} +
 
