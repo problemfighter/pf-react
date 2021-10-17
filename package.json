@@ -1,7 +1,7 @@
 {
-  "name": "pf-react",
+  "name": "@pfo/pf-react",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@types/node": "^16.11.0",
     "@types/react": "^17.0.30",
