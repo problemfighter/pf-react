@@ -6,5 +6,4 @@ import PFPageManager from "../artifacts/manager/pf-page-manager";
 
 const appConfig = new AppConfig();
 const urlMapping = new URLMapping();
-console.log('Bismillah ---')
 ReactDOM.render(<PFPageManager appConfig={appConfig} urlMapping={urlMapping}/>, document.getElementById('root'));

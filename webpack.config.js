@@ -50,7 +50,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'PF React Application',
+            title: 'PF React',
             chunksSortMode: 'none',
             template: './public/index.html',
             favicon: './public/favicon.ico',
