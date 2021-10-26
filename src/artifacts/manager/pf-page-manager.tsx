@@ -9,7 +9,9 @@ import PFAppConfig from "../config/pf-app-config";
 
 
 declare global {
-    interface Window { appConfig: PFAppConfig; }
+    interface Window {
+        appConfig: PFAppConfig;
+    }
 }
 
 

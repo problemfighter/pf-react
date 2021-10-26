@@ -1,13 +1,14 @@
 import React from 'react';
 import PFComponentState from '../component/pf-component-state';
 import PFReactComponent from "../component/pf-react-component";
-import {PFProps, PFState} from "../interface/pf-mixed-interface";
+import {PFState} from "../interface/pf-mixed-interface";
 
 
-class Props implements PFProps {
-    public componentState?: PFComponentState;
-    public component?: any;
+class Props {
+    componentState?: PFComponentState;
+    component?: any;
 }
+
 
 export default class TRBeforeRenderUIView extends PFReactComponent<Props, PFState> {
 

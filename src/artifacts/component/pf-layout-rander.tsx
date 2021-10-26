@@ -5,8 +5,6 @@ import PFReactComponent from "./pf-react-component";
 
 
 export interface LayoutRendererProps extends PFProps {
-    route: any
-    appConfig: any
     component: any
     suspenseLoader?: any
     customOperation?: any
@@ -16,7 +14,7 @@ export default class PFLayoutRenderer extends PFReactComponent<LayoutRendererPro
     render() {
         const Component = this.props.component;
         const {route, appConfig, suspenseLoader, customOperation} = this.props;
-        const suspense = suspenseLoader ? suspenseLoader : appConfig.getSuspenseLoader();
+        const suspense = suspenseLoader ? suspenseLoader : appConfig?.getSuspenseLoader();
         return (
             <React.Fragment>
                 <Suspense fallback={suspense}>

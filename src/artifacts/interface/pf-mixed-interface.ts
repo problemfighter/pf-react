@@ -1,8 +1,12 @@
 import PFHTTResponse from "../processor/http/pf-http-response";
 import {PFMessageData} from "../data/pf-message-data";
+import PFAppConfig from "../config/pf-app-config";
 
 
-export interface PFProps {}
+export interface PFProps {
+    appConfig?: PFAppConfig
+    route?: any
+}
 export interface PFState { }
 export interface HTTPCallback { callback(response: PFHTTResponse): void; }
 export interface PFPageManagerState extends PFState {}
