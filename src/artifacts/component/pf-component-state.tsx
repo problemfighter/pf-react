@@ -1,7 +1,6 @@
 import {PFMessageData} from '../data/pf-message-data';
-import {PFFormDefinitionDataOld} from "../data/pf-form-definition-data";
 import {PFState} from "../interface/pf-mixed-interface";
-import {PFLastCallData, SortDirection} from "../data/pf-mixed-data";
+import {SortDirection} from "../data/pf-mixed-data";
 
 export default class PFComponentState implements PFState {
 
@@ -14,16 +13,11 @@ export default class PFComponentState implements PFState {
 
 
     public init: boolean = false;
-    public showProgress: boolean = false;
     public showLoginUI: boolean = false;
-    public showFlashMessage: boolean = false;
-    public showFlashMessageTimer?: any;
 
     public parentComponent?: any;
-    public pfLastCallData?: PFLastCallData;
 
     public queryCondition:{[key: string]: any} = {};
-    public formDefinition: Map<string, PFFormDefinitionDataOld> = new Map<string, PFFormDefinitionDataOld>();
     public removeNotInFormDefinition: boolean = false;
     public sortDirection: SortDirection = SortDirection.descending;
     public orderBy: string = "id";
@@ -55,7 +49,5 @@ export default class PFComponentState implements PFState {
         return this;
     }
 
-    public setFormDefinition(definition: Map<string, PFFormDefinitionDataOld>) {
-        this.formDefinition = definition;
-    }
+
 }

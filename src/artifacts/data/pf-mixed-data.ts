@@ -7,14 +7,6 @@ export enum SortDirection {
     descending = 'desc'
 }
 
-export class PFLastCallData {
-    public resumeAbleCallback?: PFHTTCallback;
-
-    public resumeableCallback?: PFHTTCallback;
-    public request?: PFHTTRequest;
-}
-
-
 export interface HTTPLastCalledData {
     resumeAbleCallback?: PFHTTCallback;
     request?: PFHTTRequest;

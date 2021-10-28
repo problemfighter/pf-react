@@ -4,7 +4,7 @@ import PFHTTRequest from "../../processor/http/pf-http-request";
 import {HTTPCallback, ParentActionCaller, PFHTTPCall} from "../../interface/pf-mixed-interface";
 import PFHTTCallback from "../../processor/http/pf-http-callback";
 import PFHTTResponse from "../../processor/http/pf-http-response";
-import {HTTPLastCalledData, PFLastCallData} from "../../data/pf-mixed-data";
+import {HTTPLastCalledData} from "../../data/pf-mixed-data";
 import {PFUtil} from "../../utils/pf-util";
 
 export class PFHttpRequestHelper {
