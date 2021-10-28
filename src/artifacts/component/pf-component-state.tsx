@@ -1,5 +1,5 @@
 import {PFMessageData} from '../data/pf-message-data';
-import {PFFormDefinitionData} from "../data/pf-form-definition-data";
+import {PFFormDefinitionDataOld} from "../data/pf-form-definition-data";
 import {PFState} from "../interface/pf-mixed-interface";
 import {PFLastCallData, SortDirection} from "../data/pf-mixed-data";
 
@@ -12,9 +12,9 @@ export default class PFComponentState implements PFState {
     public messageData: PFMessageData = PFMessageData.failed("Unexpected Error!");
     public parentComponent?: any;
     public pfLastCallData?: PFLastCallData;
-    public formData:{[key: string]: any} = {};
+    public formData: { [key: string]: any } = {};
     public queryCondition:{[key: string]: any} = {};
-    public formDefinition: Map<string, PFFormDefinitionData> = new Map<string, PFFormDefinitionData>();
+    public formDefinition: Map<string, PFFormDefinitionDataOld> = new Map<string, PFFormDefinitionDataOld>();
     public removeNotInFormDefinition: boolean = false;
     public sortDirection: SortDirection = SortDirection.descending;
     public orderBy: string = "id";
@@ -46,7 +46,7 @@ export default class PFComponentState implements PFState {
         return this;
     }
 
-    public setFormDefinition(definition: Map<string, PFFormDefinitionData>) {
+    public setFormDefinition(definition: Map<string, PFFormDefinitionDataOld>) {
         this.formDefinition = definition;
     }
 }

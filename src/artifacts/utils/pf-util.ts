@@ -28,6 +28,7 @@ export const PFUtil = {
     randomString: () => {
         return Math.random().toString(36).substring(7);
     },
+
     objectValue: (object: any, defaultValue: any, ...props: string[]) => {
         let response = object;
         if (!object) {
@@ -59,11 +60,21 @@ export const PFUtil = {
         }
         return {}
     },
+
     makeDataObject(object: object): object {
         let dataObject: { [key: string]: any } = {};
         dataObject['data'] = object;
         return dataObject;
-    }
+    },
 
+    removeProperty(object: Object, keyList: Array<string> = []) {
+        let newObject: { [key: string]: any } = {};
+        for (let [key, value] of Object.entries(object)) {
+            if (keyList.indexOf(key) === -1) {
+                newObject[key] = value
+            }
+        }
+        return newObject
+    }
 
 };

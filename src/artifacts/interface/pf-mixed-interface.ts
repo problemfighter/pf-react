@@ -20,6 +20,10 @@ export interface PFHTTPCall {
     getComponent(): any;
 }
 
-export interface PFEvent {
+export interface PFInputEvent {
     fire(event: any): void;
+}
+
+export interface ParentActionCaller {
+    call(actionName?: string, data?: any): void;
 }

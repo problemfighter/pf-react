@@ -1,13 +1,13 @@
 import React from 'react';
 import {Status, PFMessageData} from '../data/pf-message-data';
 import PFComponentState from './pf-component-state';
-import {HTTPCallback, PFEvent, PFHTTPCall, PFProps} from "../interface/pf-mixed-interface";
+import {HTTPCallback, PFInputEvent, PFHTTPCall, PFProps} from "../interface/pf-mixed-interface";
 import PFReactComponent from "./pf-react-component";
 import {PFLastCallData, SortDirection} from "../data/pf-mixed-data";
 import PFAppConfig from "../config/pf-app-config";
 import PFHTTPManager from "../processor/http/pf-http-manager";
 import PFHTTRequest from "../processor/http/pf-http-request";
-import {PFFormDefinitionData} from "../data/pf-form-definition-data";
+import {PFFormDefinitionDataOld} from "../data/pf-form-definition-data";
 import PFHTTCallback from "../processor/http/pf-http-callback";
 import {PFUtil} from "../utils/pf-util";
 import PFStaticHolder from "../utils/pf-static-holder";
@@ -25,18 +25,6 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     private GET: string = "get";
     private REDIRECT_DATA: string = "REDIRECT_DATA";
 
-    // @ts-ignore
-    state: PFComponentState = new PFComponentState();
-
-    private appConfig(): PFAppConfig {
-        // @ts-ignore
-        if (this.props.appConfig) {
-            // @ts-ignore
-            return this.props.appConfig
-        }
-        // @ts-ignore
-        return window.appConfig;
-    }
 
     public sortItemAction(event: any, onClickData: any, callBack?: any): void {
         let orderBy = this.state.orderBy;
@@ -143,16 +131,16 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         this.closeFlashMessageTimer();
     }
 
-    public getBaseUrl(): string {
-        return this.appConfig().getBaseURL();
-    }
 
     private httpRequestData(url: string): PFHTTRequest {
         let request: PFHTTRequest = new PFHTTRequest();
+        // @ts-ignore
         request.baseURL = this.getBaseUrl();
         request.url = url;
+        // @ts-ignore
         let authCallback = this.appConfig().authCallback();
         if (authCallback) {
+            // @ts-ignore
             request.authCallback = this.appConfig().authCallback();
         }
         return request;
@@ -160,7 +148,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
 
 
     private setUnsetInputDataError(name: string, isError: boolean = false, errorMessage: string = "") {
-        let definition: PFFormDefinitionData | undefined = this.state.formDefinition.get(name);
+        let definition: PFFormDefinitionDataOld | undefined = this.state.formDefinition.get(name);
         if (!definition) {
             return
         }
@@ -192,7 +180,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     }
 
     private removeValidationError(name: string) {
-        let definition: PFFormDefinitionData | undefined = this.state.formDefinition.get(name);
+        let definition: PFFormDefinitionDataOld | undefined = this.state.formDefinition.get(name);
         if (definition && definition.isError) {
             this.updateFormDefinitionData(name, false);
         }
@@ -201,7 +189,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     public validateApiResponseData(errors: Object) {
         for (let [name, message] of Object.entries(errors)) {
             if (this.state.formDefinition.get(name) === undefined) {
-                this.addFormDefinition(name, new PFFormDefinitionData({
+                this.addFormDefinition(name, new PFFormDefinitionDataOld({
                     required: true,
                     errorMessage: message,
                 }));
@@ -210,7 +198,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         }
     }
 
-    private checkCustomValidation(definition: PFFormDefinitionData, name: any): boolean {
+    private checkCustomValidation(definition: PFFormDefinitionDataOld, name: any): boolean {
         let isValid: boolean = true;
         if (definition.customValidation && definition.customValidation.validate) {
             let response: PFMessageData = definition.customValidation.validate(name, this.state.formData[name], this.state.formData);
@@ -224,7 +212,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     public validateFormInput(): boolean {
         let isValid: boolean = true;
         if (this.state.formDefinition) {
-            this.state.formDefinition.forEach((definition: PFFormDefinitionData, name: string) => {
+            this.state.formDefinition.forEach((definition: PFFormDefinitionDataOld, name: string) => {
                 if (definition.required && !this.state.formData[name]) {
                     isValid = false;
                     this.setUnsetInputDataError(name);
@@ -243,6 +231,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
 
     private onChangeSetInputValue(name: string, value: any) {
         if (this.state.formData) {
+            // @ts-ignore
             this.state.formData[name] = value;
             this.setState<never>({
                 ["_input_data_" + name]: value,
@@ -260,6 +249,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
 
     public setDefaultInputValue(name: string, value: any) {
         if (this.state.formData) {
+            // @ts-ignore
             this.state.formData[name] = value;
         }
     }
@@ -301,7 +291,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         return PFUtil.mapToJson(map);
     }
 
-    private getFieldDefinition(name: string): PFFormDefinitionData | any {
+    private getFieldDefinition(name: string): PFFormDefinitionDataOld | any {
         return this.state.formDefinition.get(name);
     }
 
@@ -318,9 +308,9 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         return files;
     }
 
-    private inputDataHandler(name: string, changeEvent?: PFEvent, blurEvent?: PFEvent, inputType?: string) {
+    private inputDataHandler(name: string, changeEvent?: PFInputEvent, blurEvent?: PFInputEvent, inputType?: string) {
         let attributes: { [key: string]: any } = {};
-        let definition: PFFormDefinitionData = this.getFieldDefinition(name);
+        let definition: PFFormDefinitionDataOld = this.getFieldDefinition(name);
         attributes.name = name;
         attributes.onChange = (event: any) => {
             const target = event.target;
@@ -380,15 +370,15 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     }
 
 
-    public handleInputDataChangeByType(name: string, type: string, changeEvent?: PFEvent, blurEvent?: PFEvent) {
+    public handleInputDataChangeByType(name: string, type: string, changeEvent?: PFInputEvent, blurEvent?: PFInputEvent) {
         return this.inputDataHandler(name, changeEvent, blurEvent, type);
     }
 
-    public handleInputDataChange(name: string, changeEvent?: PFEvent, blurEvent?: PFEvent) {
+    public handleInputDataChange(name: string, changeEvent?: PFInputEvent, blurEvent?: PFInputEvent) {
         return this.inputDataHandler(name, changeEvent, blurEvent);
     }
 
-    public handleSwitchInputDataChange(name: string, changeEvent?: PFEvent) {
+    public handleSwitchInputDataChange(name: string, changeEvent?: PFInputEvent) {
         let attributes: { [key: string]: any } = {};
         attributes.name = name;
         attributes.onChange = (event: any) => {
@@ -409,8 +399,8 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         return attributes
     }
 
-    public addFormDefinition(name: string, fullDefinition?: PFFormDefinitionData) {
-        let definition: PFFormDefinitionData = fullDefinition ? fullDefinition : new PFFormDefinitionData();
+    public addFormDefinition(name: string, fullDefinition?: PFFormDefinitionDataOld) {
+        let definition: PFFormDefinitionDataOld = fullDefinition ? fullDefinition : new PFFormDefinitionDataOld();
         definition.name = name;
         this.state.formDefinition.set(name, definition);
     }
@@ -427,12 +417,12 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         }
     }
 
-    public updateFormDefinition(fullDefinition: PFFormDefinitionData) {
+    public updateFormDefinition(fullDefinition: PFFormDefinitionDataOld) {
         let name = fullDefinition.name ? fullDefinition.name : ""
         return this.state.formDefinition.set(name, fullDefinition);
     }
 
-    public setFormDefinition(fullDefinition: Map<string, PFFormDefinitionData>) {
+    public setFormDefinition(fullDefinition: Map<string, PFFormDefinitionDataOld>) {
         this.state.setFormDefinition(fullDefinition);
     }
 
@@ -507,6 +497,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
                 return _this;
             }
         };
+        // @ts-ignore
         this.appConfig().renewAuthorization(trHttpCall);
     }
 
@@ -524,6 +515,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
                 this.showProgress();
             },
             success: (response: PFHTTResponse) => {
+                // @ts-ignore
                 if (this.appConfig().isAuthorized(response)) {
                     resumeableCallback.success(response);
                 } else {
@@ -531,6 +523,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
                 }
             },
             failed: (response: PFHTTResponse) => {
+                // @ts-ignore
                 if (this.appConfig().isAuthorized(response)) {
                     resumeableCallback.failed(response);
                 } else {
@@ -545,6 +538,7 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     }
 
     private httpCaller(): PFHTTPManager {
+        // @ts-ignore
         return this.appConfig().getHTTPManager();
     }
 
@@ -684,19 +678,5 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
     };
 
 
-    public renderUI() {
-        return (
-            <h1>TR React Application View Component</h1>
-        );
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                {this.appConfig().getBeforeRenderUIView(this.state, this)}
-                {this.renderUI()}
-            </React.Fragment>
-        )
-    }
 
 }
