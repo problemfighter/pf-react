@@ -93,8 +93,9 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         throw new PFException("Data Validation Error")
     }
 
-    public setFormData() {
-
+    public setFormData(formData: { [key: string]: any }) {
+        this.state.formData = formData
+        this.notifyComponentChange()
     }
 
     public getBaseUrl(): string {
