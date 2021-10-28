@@ -179,12 +179,6 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         });
     }
 
-    private removeValidationError(name: string) {
-        let definition: PFFormDefinitionDataOld | undefined = this.state.formDefinition.get(name);
-        if (definition && definition.isError) {
-            this.updateFormDefinitionData(name, false);
-        }
-    }
 
     public validateApiResponseData(errors: Object) {
         for (let [name, message] of Object.entries(errors)) {
@@ -295,109 +289,10 @@ export default class PfComponentOld<P extends PFProps, S extends PFComponentStat
         return this.state.formDefinition.get(name);
     }
 
-    private getFilesFromInput(name: string, target: any): Array<File> {
-        let files = new Array<File>();
-        if (this.state.formData && this.state.formData[name] && this.state.formData[name] instanceof FormData) {
-            files = this.state.formData[name];
-        }
-        if (target && target.files) {
-            Array.from(target.files).forEach((file: any) => {
-                files.push(file)
-            });
-        }
-        return files;
-    }
-
-    private inputDataHandler(name: string, changeEvent?: PFInputEvent, blurEvent?: PFInputEvent, inputType?: string) {
-        let attributes: { [key: string]: any } = {};
-        let definition: PFFormDefinitionDataOld = this.getFieldDefinition(name);
-        attributes.name = name;
-        attributes.onChange = (event: any) => {
-            const target = event.target;
-            const name = target.name;
-            let value;
-            if (target.type === 'file') {
-                value = this.getFilesFromInput(name, target);
-            } else if (target.type === 'checkbox') {
-                value = target.checked;
-            } else {
-                value = target.value;
-            }
-            this.removeValidationError(name);
-            this.onChangeSetInputValue(name, value);
-            if (changeEvent && changeEvent.fire) {
-                changeEvent.fire(event);
-            }
-        };
-
-        attributes.onBlur = (event: any) => {
-            if (event && event.target && event.target.name) {
-                this.setUnsetInputDataError(event.target.name);
-            }
-            if (blurEvent && blurEvent.fire) {
-                blurEvent.fire(event);
-            }
-        };
-
-        if (definition && definition.isHelpTextAttribute && definition.helpText) {
-            attributes.helperText = definition.helpText;
-        }
-
-        if (definition && definition.isErrorAttribute) {
-            attributes.error = definition.isError;
-            if (definition && definition.isHelpTextAttribute && definition.isError) {
-                attributes.helperText = definition.errorMessage;
-            }
-        }
-
-        if (definition && definition.required) {
-            attributes.required = true;
-        }
-
-        if (definition && definition.defaultValue) {
-            attributes.defaultValue = definition.defaultValue;
-        }
-
-        let inputValue = this.getInputValue(name)
-        if (inputValue && ((inputValue instanceof Array && inputValue.some((item: any) => item instanceof File)) || (inputValue instanceof File))) {
-            inputValue = ""
-        } else if (inputType && inputType === "file") {
-            inputValue = ""
-            attributes.type = inputType
-        }
-        attributes.value = inputValue
-        return attributes;
-    }
 
 
-    public handleInputDataChangeByType(name: string, type: string, changeEvent?: PFInputEvent, blurEvent?: PFInputEvent) {
-        return this.inputDataHandler(name, changeEvent, blurEvent, type);
-    }
 
-    public handleInputDataChange(name: string, changeEvent?: PFInputEvent, blurEvent?: PFInputEvent) {
-        return this.inputDataHandler(name, changeEvent, blurEvent);
-    }
 
-    public handleSwitchInputDataChange(name: string, changeEvent?: PFInputEvent) {
-        let attributes: { [key: string]: any } = {};
-        attributes.name = name;
-        attributes.onChange = (event: any) => {
-            const target = event.target;
-            const name = target.name;
-            let value = target.checked;
-            this.onChangeSetInputValue(name, value);
-            if (changeEvent && changeEvent.fire) {
-                changeEvent.fire(event);
-            }
-        };
-        attributes.value = this.getInputValue(name);
-        if (attributes.value) {
-            attributes.checked = true
-        } else {
-            attributes.checked = false
-        }
-        return attributes
-    }
 
     public addFormDefinition(name: string, fullDefinition?: PFFormDefinitionDataOld) {
         let definition: PFFormDefinitionDataOld = fullDefinition ? fullDefinition : new PFFormDefinitionDataOld();

@@ -7,6 +7,7 @@ import {FieldSpecification} from "../data/pf-input-definition";
 import {PFComponentHelper} from "./helper/pf-component-helper";
 import {PFException} from "../common/pf-exception";
 import {PFMessageData} from "../data/pf-message-data";
+import {PFHttpRequestHelper} from "./helper/pf-http-request-helper";
 
 export default class PFComponent<P extends PFProps, S extends PFComponentState> extends PFReactComponent<P, S> {
 
@@ -15,6 +16,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     state: PFComponentState = new PFComponentState();
     public fieldSpecification: FieldSpecification = new FieldSpecification();
     private pfComponentHelper!: PFComponentHelper
+    public httpRequest!: PFHttpRequestHelper
 
 
     constructor(props: any) {
@@ -22,13 +24,9 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         const _this = this;
         this.pfComponentHelper = new PFComponentHelper(
             this.state,
-            this.fieldSpecification,
-            {
-                call(actionName?: string, data?: any) {
-                    _this.notifyComponentChange()
-                }
-            }
+            this.fieldSpecification, _this.allowControlFromChild()
         )
+        this.httpRequest = new PFHttpRequestHelper(_this.appConfig(), _this.allowControlFromChild())
         this.fieldDefinition(this.fieldSpecification)
     }
 
@@ -44,6 +42,25 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
                 ["componentChanged"]: Math.random() * 100000000000
             }
         );
+    }
+
+    private allowControlFromChild() {
+        const _this = this;
+        return {
+            call(actionName?: string, data?: any) {
+                switch (actionName) {
+                    case "notify":
+                        _this.notifyComponentChange()
+                        break
+                    case "showLoader":
+                        _this.showLoader()
+                        break
+                    case "hideLoader":
+                        _this.hideLoader()
+                        break
+                }
+            }
+        }
     }
 
     public getComponentHelper(): PFComponentHelper {
