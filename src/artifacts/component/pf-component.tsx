@@ -6,6 +6,7 @@ import PFAppConfig from "../config/pf-app-config";
 import {FieldSpecification} from "../data/pf-input-definition";
 import {PFComponentHelper} from "./helper/pf-component-helper";
 import {PFException} from "../common/pf-exception";
+import {PFMessageData} from "../data/pf-message-data";
 
 export default class PFComponent<P extends PFProps, S extends PFComponentState> extends PFReactComponent<P, S> {
 
@@ -83,6 +84,42 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         return this.appConfig().getBaseURL();
     }
 
+    public showErrorFlash(message: string) {
+        this.setState({
+                messageData: PFMessageData.failed(message),
+                isShowFlashMessage: true
+            }
+        );
+    }
+
+    public showSuccessFlash(message: string) {
+        this.setState({
+                messageData: PFMessageData.success(message),
+                isShowFlashMessage: true
+            }
+        );
+    }
+
+    public closeFlashMessage() {
+        this.setState({
+                isShowFlashMessage: false
+            }
+        );
+    }
+
+    public showLoader() {
+        this.setState({
+                isShowLoader: true
+            }
+        );
+    }
+
+    public hideLoader() {
+        this.setState({
+                isShowLoader: false
+            }
+        );
+    }
 
     render() {
         return (
