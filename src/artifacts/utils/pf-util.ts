@@ -11,6 +11,7 @@ export const PFUtil = {
         }
         return false;
     },
+
     addDataToObject: (object: any, key: any, value: any) =>{
         if (object === undefined) {
             object = {};
@@ -25,6 +26,7 @@ export const PFUtil = {
     isMatchPathname: (url: any) => {
         return window.location.pathname === url;
     },
+
     randomString: () => {
         return Math.random().toString(36).substring(7);
     },

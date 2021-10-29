@@ -8,9 +8,13 @@ import {PFComponentHelper} from "./helper/pf-component-helper";
 import {PFException} from "../common/pf-exception";
 import {PFMessageData} from "../data/pf-message-data";
 import {PFHttpRequestHelper} from "./helper/pf-http-request-helper";
+import {PFUtil} from "../utils/pf-util";
+import PFStaticHolder from "../utils/pf-static-holder";
 
 export default class PFComponent<P extends PFProps, S extends PFComponentState> extends PFReactComponent<P, S> {
 
+
+    private readonly REDIRECT_DATA: string = "REDIRECT_DATA";
 
     // @ts-ignore
     state: PFComponentState = new PFComponentState();
@@ -77,6 +81,11 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     public fieldDefinition(field: FieldSpecification) {}
 
 
+    public showServerSideFormValidationError(errors: Object) {
+        this.pfComponentHelper.showServerSideFormValidationError(errors)
+    }
+
+
     public setupFieldAttrs(name: string) {
         let inputAttributes: any = this.pfComponentHelper.getInputDefinitionToAttributes(name)
         this.pfComponentHelper.handleOnChangeEvent(inputAttributes)
@@ -139,7 +148,44 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         );
     }
 
+    public redirect(url: any) {
+        PFUtil.gotoUrl(this, url);
+    }
+
+    public redirectWithData(url: any, data: any) {
+        PFStaticHolder.addTempData(this.REDIRECT_DATA, data);
+        this.redirect(url);
+    }
+
+    public getRedirectData() {
+        let data = PFStaticHolder.tempData[this.REDIRECT_DATA];
+        delete PFStaticHolder.tempData[this.REDIRECT_DATA];
+        return data;
+    }
+
+    public successRedirect(url: any, message: string) {
+        PFStaticHolder.addMessageData(message, true);
+        this.redirect(url);
+    }
+
+    public failedRedirect(url: any, message: string) {
+        PFStaticHolder.addMessageData(message, false);
+        this.redirect(url);
+    }
+
+    public showRedirectMessage() {
+        if (PFStaticHolder.message.message) {
+            if (PFStaticHolder.message.isSuccess) {
+                this.showSuccessFlash(PFStaticHolder.message.message)
+            } else {
+                this.showErrorFlash(PFStaticHolder.message.message)
+            }
+        }
+        PFStaticHolder.message = {};
+    }
+
     render() {
+        this.pfComponentHelper.updateState(this.state)
         return (
             <React.Fragment>
                 {this.appConfig().getBeforeRenderUIView(this.state, this)}

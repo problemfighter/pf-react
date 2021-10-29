@@ -6,14 +6,20 @@ import {PFMessageData, Status} from "../../data/pf-message-data";
 
 export class PFComponentHelper {
 
-    private state!: PFComponentState;
+    private state!: any;
     private fieldSpecification!: FieldSpecification;
     private parentActionCaller?: ParentActionCaller;
 
-    constructor(state: PFComponentState, fieldSpecification: FieldSpecification, parentActionCaller?: ParentActionCaller) {
+    constructor(state: any, fieldSpecification: FieldSpecification, parentActionCaller?: ParentActionCaller) {
         this.state = state
         this.fieldSpecification = fieldSpecification
         this.parentActionCaller = parentActionCaller
+    }
+
+    public updateState(state: any) {
+        if (state.constructor.name !== this.state.constructor.name) {
+            this.state = state
+        }
     }
 
     private getFilesFromInput(name: string, target: any): Array<File> {
@@ -81,6 +87,10 @@ export class PFComponentHelper {
             return this.state.formData[name];
         }
         return defaultValue;
+    }
+
+    public getFormData() {
+        return this.state.formData
     }
 
     public removeDataFromFormData(name: string) {
@@ -153,16 +163,16 @@ export class PFComponentHelper {
     public updateInputValue(name: string, inputAttributes: any) {
         let definition: any = this.fieldSpecification.getDefByName(name)
         let defaultValue = ""
-        if (definition.defaultValue) {
+        if (definition && definition.defaultValue) {
             defaultValue = definition.defaultValue
         }
         let value = this.getValueFromFormData(name, defaultValue)
         if (value && ((value instanceof Array && value.some((item: any) => item instanceof File)) || (value instanceof File))) {
             value = ""
-        } else if (definition.type && definition.type === "file") {
+        } else if (definition && definition.type && definition.type === "file") {
             value = ""
         }
-        inputAttributes.defaultValue = value
+        inputAttributes.value = value
         return inputAttributes
     }
 
@@ -179,5 +189,11 @@ export class PFComponentHelper {
             }
         }
         return response
+    }
+
+    public showServerSideFormValidationError(errors: Object) {
+        for (let [name, message] of Object.entries(errors)) {
+            this.updateFieldSpecificationValidation(name, true, true, message)
+        }
     }
 }
