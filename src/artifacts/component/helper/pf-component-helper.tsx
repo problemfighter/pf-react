@@ -1,4 +1,3 @@
-import PFComponentState from "../pf-component-state";
 import {BaseInputDefinition, FieldSpecification, InputDataDefinition} from "../../data/pf-input-definition";
 import {PFUtil} from "../../utils/pf-util";
 import {ParentActionCaller, PFInputEvent} from "../../interface/pf-mixed-interface";
