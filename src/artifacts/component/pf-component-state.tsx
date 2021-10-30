@@ -8,6 +8,9 @@ export default class PFComponentState implements PFState {
     public isShowLoader: boolean = false;
     public isShowFlashMessage: boolean = false;
     public messageData: PFMessageData = PFMessageData.failed("Unexpected Error!");
+    public itemPerPage: number = 20
+    public currentPage: number = 1
+    public totalPage: number = 0
 
 
 
@@ -24,30 +27,7 @@ export default class PFComponentState implements PFState {
     public search?: string;
     public itemList: Array<object> = [];
     public itemDetails: object = {};
-    public maxItem: number = 20;
-    public totalItem: number = 0;
-    public itemOffset: number = 0;
-    public pageOffset: number = 0;
 
-    public setSortDirection(sortDirection: SortDirection): this {
-        this.sortDirection = sortDirection;
-        return this;
-    }
-
-    public setItemOffset(itemOffset: number): this {
-        this.itemOffset = itemOffset;
-        return this;
-    }
-
-    public setMaxItem(maxItem: number): this {
-        this.maxItem = maxItem;
-        return this;
-    }
-
-    public setOrderBy(orderBy: string): this{
-        this.orderBy = orderBy;
-        return this;
-    }
 
 
 }
