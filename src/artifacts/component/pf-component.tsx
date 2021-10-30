@@ -10,6 +10,7 @@ import {PFMessageData} from "../data/pf-message-data";
 import {PFHttpRequestHelper} from "./helper/pf-http-request-helper";
 import {PFUtil} from "../utils/pf-util";
 import PFStaticHolder from "../utils/pf-static-holder";
+import {SortDirection} from "../data/pf-mixed-data";
 
 export default class PFComponent<P extends PFProps, S extends PFComponentState> extends PFReactComponent<P, S> {
 
@@ -182,6 +183,21 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
             }
         }
         PFStaticHolder.message = {};
+    }
+
+    public tableColumnSortAction(event: any, sortDirection: SortDirection, fieldName?: string, callBack?: any): void {
+        if (fieldName && sortDirection) {
+            this.setState(status => {
+                return {
+                    orderBy: fieldName,
+                    sortDirection: sortDirection
+                }
+            }, () => {
+                if (callBack) {
+                    callBack();
+                }
+            });
+        }
     }
 
     render() {
