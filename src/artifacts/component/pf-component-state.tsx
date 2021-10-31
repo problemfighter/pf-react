@@ -11,6 +11,7 @@ export default class PFComponentState implements PFState {
     public itemPerPage: number = 20
     public currentPage: number = 1
     public totalPage: number = 0
+    public totalItem: number = 0
 
 
 
