@@ -153,6 +153,10 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         PFUtil.gotoUrl(this, url);
     }
 
+    public showLoginUI() {
+        this.setState({showLoginUI: true});
+    }
+
     public redirectWithData(url: any, data: any) {
         PFStaticHolder.addTempData(this.REDIRECT_DATA, data);
         this.redirect(url);
