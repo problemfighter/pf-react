@@ -14,6 +14,8 @@ const PFBeforeRenderUIView = lazy(() => import('../view/pf-before-render-ui-view
 
 export default class PFAppConfig {
 
+    private generalConfig: { [key: string]: any } = {};
+
     public getBeforeRenderUIView(componentState: PFComponentState, component: any) {
         return (<PFBeforeRenderUIView componentState={componentState} component={component}/>)
     }
@@ -44,6 +46,17 @@ export default class PFAppConfig {
 
     public renewAuthorization(pfHttpCall: PFHTTPCall): void {
         pfHttpCall.resume();
+    }
+
+    public addToGeneralConfig(key: string, value: any) {
+        this.generalConfig[key] = value
+    }
+
+    public getFromGeneralConfig(key: string, defaultValue: any = undefined) {
+        if (this.generalConfig[key]) {
+            return this.generalConfig[key]
+        }
+        return defaultValue
     }
 
 }

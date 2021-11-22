@@ -86,6 +86,18 @@ export class FieldSpecification {
         return this
     }
 
+    public file(spec: InputDefinition): FieldSpecification {
+        spec.type = "file"
+        this.fieldDefinition.set(spec.name, spec)
+        return this
+    }
+
+    public url(spec: InputDefinition): FieldSpecification {
+        spec.type = "url"
+        this.fieldDefinition.set(spec.name, spec)
+        return this
+    }
+
     public password(spec: InputDefinition): FieldSpecification {
         spec.type = "password"
         this.fieldDefinition.set(spec.name, spec)
