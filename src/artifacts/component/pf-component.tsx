@@ -31,7 +31,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
             this.state,
             this.fieldSpecification, _this.allowControlFromChild()
         )
-        this.httpRequest = new PFHttpRequestHelper(_this.appConfig(), _this.allowControlFromChild())
+        this.httpRequest = new PFHttpRequestHelper(_this.appConfig(), _this.allowControlFromChild(), _this)
         this.fieldDefinition(this.fieldSpecification)
     }
 

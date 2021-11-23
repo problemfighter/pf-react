@@ -10,6 +10,7 @@ import {PFUtil} from "../../utils/pf-util";
 export class PFHttpRequestHelper {
 
     private appConfig!: PFAppConfig
+    private parentComponent: any
     private lastCalledData!: HTTPLastCalledData
     private parentActionCaller?: ParentActionCaller;
     private readonly POST: string = "post";
@@ -17,9 +18,10 @@ export class PFHttpRequestHelper {
     private readonly PUT: string = "put";
     private readonly GET: string = "get";
 
-    constructor(appConfig: PFAppConfig, parentActionCaller?: ParentActionCaller) {
+    constructor(appConfig: PFAppConfig, parentActionCaller?: ParentActionCaller, parentComponent?: any) {
         this.appConfig = appConfig
         this.parentActionCaller = parentActionCaller
+        this.parentComponent = parentComponent
     }
 
     private showLoader() {
@@ -84,6 +86,9 @@ export class PFHttpRequestHelper {
                 _this.resumeLastFailedRequest();
             },
             getComponent(): any {
+                return _this.parentComponent;
+            },
+            getHttpRequestHelper(): any {
                 return _this;
             }
         };

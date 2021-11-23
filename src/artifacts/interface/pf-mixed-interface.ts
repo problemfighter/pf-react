@@ -18,6 +18,7 @@ export interface CustomValidation {
 export interface PFHTTPCall {
     resume(): void;
     getComponent(): any;
+    getHttpRequestHelper(): any;
 }
 
 export interface PFInputEvent {
