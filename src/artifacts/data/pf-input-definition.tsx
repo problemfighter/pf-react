@@ -140,6 +140,18 @@ export class FieldSpecification {
         return this
     }
 
+    public number(spec: OneOffInputDefinition): FieldSpecification {
+        spec.type = "number"
+        this.fieldDefinition.set(spec.name, spec)
+        return this
+    }
+
+    public time(spec: OneOffInputDefinition): FieldSpecification {
+        spec.type = "time"
+        this.fieldDefinition.set(spec.name, spec)
+        return this
+    }
+
     public removeItem(name: string): FieldSpecification {
         this.fieldDefinition.delete(name)
         return this

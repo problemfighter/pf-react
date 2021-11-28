@@ -102,6 +102,13 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         return inputAttributes
     }
 
+    public getFormDataValueByName(name: string, defaultValue: any = undefined) {
+        if (this.state.formData && this.state.formData[name]) {
+            return this.state.formData[name]
+        }
+        return defaultValue
+    }
+
     public getFormData() {
         if (this.pfComponentHelper.validateEachDataOfFormData()) {
             return this.state.formData
