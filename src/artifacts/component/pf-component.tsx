@@ -35,6 +35,13 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         this.fieldDefinition(this.fieldSpecification)
     }
 
+    public removeFieldSpecification(...fields: any) {
+        const _this = this
+        if (fields) {
+            fields.forEach((field: string) => _this.fieldSpecification.removeItem(field))
+        }
+    }
+
     private appConfig(): PFAppConfig {
         if (this.props.appConfig) {
             return this.props.appConfig

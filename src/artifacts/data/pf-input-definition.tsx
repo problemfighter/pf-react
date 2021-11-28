@@ -140,6 +140,11 @@ export class FieldSpecification {
         return this
     }
 
+    public removeItem(name: string): FieldSpecification {
+        this.fieldDefinition.delete(name)
+        return this
+    }
+
 
     public getDefinitions() {
         return this.fieldDefinition
