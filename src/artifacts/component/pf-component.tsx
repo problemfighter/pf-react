@@ -94,6 +94,13 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     }
 
 
+    public updateInputValue(name: string, value: any) {
+        let inputAttributes: any = this.pfComponentHelper.getInputDefinitionToAttributes(name)
+        inputAttributes.value = value
+        this.pfComponentHelper.updateInputValue(name, inputAttributes)
+        this.notifyComponentChange()
+    }
+
     public setupFieldAttrs(name: string) {
         let inputAttributes: any = this.pfComponentHelper.getInputDefinitionToAttributes(name)
         this.pfComponentHelper.handleOnChangeEvent(inputAttributes)
