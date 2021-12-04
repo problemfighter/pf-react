@@ -126,6 +126,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
 
     public setFormData(formData: { [key: string]: any }) {
         this.state.formData = formData
+        this.pfComponentHelper.setFormData(formData)
         this.notifyComponentChange()
     }
 

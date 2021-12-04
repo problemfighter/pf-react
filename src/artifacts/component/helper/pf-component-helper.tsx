@@ -92,6 +92,10 @@ export class PFComponentHelper {
         return this.state.formData
     }
 
+    public setFormData(formData: any) {
+        this.state.formData = formData
+    }
+
     public removeDataFromFormData(name: string) {
         if (this.state.formData && this.state.formData[name]) {
             delete this.state.formData[name]
