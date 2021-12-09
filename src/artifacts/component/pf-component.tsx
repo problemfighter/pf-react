@@ -130,6 +130,10 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         this.notifyComponentChange()
     }
 
+    public removeDataFromFormData(name: string) {
+        this.pfComponentHelper.removeDataFromFormData(name)
+    }
+
     public getBaseUrl(): string {
         return this.appConfig().getBaseURL();
     }
