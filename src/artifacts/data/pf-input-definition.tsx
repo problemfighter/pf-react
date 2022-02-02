@@ -40,7 +40,7 @@ export interface BaseInputDefinition extends InputDataDefinition {
     required?: boolean
     autoFocus?: boolean
 
-    label: React.ReactNode;
+    label?: React.ReactNode;
     error?: boolean
     wasValidated?: boolean
     helperText?: React.ReactNode
