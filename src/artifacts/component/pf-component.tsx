@@ -22,6 +22,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     public fieldSpecification: FieldSpecification = new FieldSpecification();
     private pfComponentHelper!: PFComponentHelper
     public httpRequest!: PFHttpRequestHelper
+    pageTitle!: string
 
 
     constructor(props: any) {
@@ -33,6 +34,19 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         )
         this.httpRequest = new PFHttpRequestHelper(_this.appConfig(), _this.allowControlFromChild(), _this)
         this.fieldDefinition(this.fieldSpecification)
+        this.setPageTitle()
+    }
+
+    public setPageTitle(pageTitle?: string) {
+        let title = pageTitle
+        if (!title && this.pageTitle) {
+            title = this.pageTitle
+        } else if (this.props.appConfig?.pageTitle) {
+            title = this.props.appConfig?.pageTitle
+        }
+        if (title) {
+            document.title = title
+        }
     }
 
     public removeFieldSpecification(...fields: any) {
@@ -232,6 +246,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
 
     render() {
         this.pfComponentHelper.updateState(this.state)
+        this.setPageTitle()
         return (
             <React.Fragment>
                 {this.appConfig().getBeforeRenderUIView(this.state, this)}
