@@ -169,6 +169,16 @@ export class PFHttpRequestHelper {
         this.httpManager().post(request, callback);
     }
 
+    public postMultipartFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any): void {
+        let request: PFHTTRequest = this.httpRequestObject(url);
+        request.headers = request.headers = PFUtil.addDataToObject(request.headers, 'Content-Type', 'multipart/form-data');
+        request.method = this.POST;
+        request.onDownloadProgress = onUploadProgress;
+        request.requestData = formData
+        let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
+        this.httpManager().post(request, callback);
+    }
+
     public postFile(url: string, data: object, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any): void {
         let request: PFHTTRequest = this.httpRequestObject(url);
         request.headers = request.headers = PFUtil.addDataToObject(request.headers, 'Content-Type', 'multipart/form-data');
@@ -179,10 +189,18 @@ export class PFHttpRequestHelper {
         this.httpManager().post(request, callback);
     }
 
-    public postFormData(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback): void {
+    public postObjectToFormData(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback): void {
         let request: PFHTTRequest = this.httpRequestObject(url);
         request.method = this.POST;
         request.requestData = this.convertDataObjectToFormData(data);
+        let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
+        this.httpManager().post(request, callback);
+    }
+
+    public postFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback): void {
+        let request: PFHTTRequest = this.httpRequestObject(url);
+        request.method = this.POST;
+        request.requestData = formData;
         let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
         this.httpManager().post(request, callback);
     }
