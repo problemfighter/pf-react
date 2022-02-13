@@ -144,6 +144,10 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         this.notifyComponentChange()
     }
 
+    public resetFormData() {
+        this.setFormData({})
+    }
+
     public removeDataFromFormData(name: string) {
         this.pfComponentHelper.removeDataFromFormData(name)
     }
