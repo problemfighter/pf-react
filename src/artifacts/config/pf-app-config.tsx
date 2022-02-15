@@ -16,6 +16,7 @@ export default class PFAppConfig {
 
     private generalConfig: { [key: string]: any } = {};
     public pageTitle: string = "PF React"
+    public staticURL: string = ""
 
     public getBeforeRenderUIView(componentState: PFComponentState, component: any) {
         return (<PFBeforeRenderUIView componentState={componentState} component={component}/>)
