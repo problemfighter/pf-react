@@ -112,6 +112,8 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         let inputAttributes: any = this.pfComponentHelper.getInputDefinitionToAttributes(name)
         inputAttributes.value = value
         this.pfComponentHelper.updateInputValue(name, inputAttributes)
+        this.state.formData[name] = value
+        this.pfComponentHelper.setFormData(this.state.formData)
         this.notifyComponentChange()
     }
 
