@@ -42,7 +42,9 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         if (!title && this.pageTitle) {
             title = this.pageTitle
         } else if (this.props.appConfig?.pageTitle) {
-            title = this.props.appConfig?.pageTitle
+            if (!document.title || document.title === "") {
+                title = this.props.appConfig?.pageTitle
+            }
         }
         if (title) {
             document.title = title
