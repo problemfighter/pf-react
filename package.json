@@ -32,7 +32,7 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "readme.md"
   ],
   "repository": {
     "type": "git",
