@@ -252,9 +252,13 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         }
     }
 
-    render() {
+    beforeRenderCall() {
         this.pfComponentHelper.updateState(this.state)
         this.setPageTitle()
+    }
+
+    render() {
+        this.beforeRenderCall()
         return (
             <React.Fragment>
                 {this.appConfig().getBeforeRenderUIView(this.state, this)}
