@@ -25,4 +25,3 @@ For guidance on setting up a development environment and how to make a contribut
 * **Source Code :** [https://github.com/problemfighter/pf-react](https://github.com/problemfighter/pf-react)
 * **Issue Tracker :** [https://github.com/problemfighter/pf-react/issues](https://github.com/problemfighter/pf-react/issues)
 * **Website :** [https://www.problemfighter.com/open-source](https://www.problemfighter.com/open-source)
-
