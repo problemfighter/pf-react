@@ -6,6 +6,7 @@ import {PFPageManagerProps} from "../interface/pf-page-manager-props";
 import {PFPageManagerState} from "../interface/pf-mixed-interface";
 import PFReactComponent from "../component/pf-react-component";
 import PFAppConfig from "../config/pf-app-config";
+import PFContextComponent from "../component/pf-context-component";
 
 
 declare global {
@@ -47,21 +48,22 @@ export default class PFPageManager extends PFReactComponent<PFPageManagerProps, 
 
 
     render() {
-        let urlMapping = this.props.urlMapping;
-        let appConfig = this.props.appConfig;
+        const {urlMapping, appConfig, contextProps} = this.props
         return (
-            <BrowserRouter>
-                <Switch>
-                    {
-                        urlMapping.getLayoutsAndPages().map((layoutData: PFLayoutInfoData, index: any) => {
-                            if (layoutData.pageInfoDataList.length !== 0) {
-                                return this.generateURL(layoutData.pageInfoDataList, layoutData, index);
-                            }
-                        })
-                    }
-                    <Route component={appConfig.getNotFoundView}/>
-                </Switch>
-            </BrowserRouter>
+            <PFContextComponent contextProps={contextProps} appConfig={appConfig}>
+                <BrowserRouter>
+                    <Switch>
+                        {
+                            urlMapping.getLayoutsAndPages().map((layoutData: PFLayoutInfoData, index: any) => {
+                                if (layoutData.pageInfoDataList.length !== 0) {
+                                    return this.generateURL(layoutData.pageInfoDataList, layoutData, index);
+                                }
+                            })
+                        }
+                        <Route component={appConfig.getNotFoundView}/>
+                    </Switch>
+                </BrowserRouter>
+            </PFContextComponent>
         );
     }
 
