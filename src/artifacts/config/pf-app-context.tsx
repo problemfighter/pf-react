@@ -5,6 +5,7 @@ export interface PFAppContextProps {
     customConf?: { [key: string]: any } | null
     nav?: any[] | null
     theme?: string
+    isImplement?: boolean
     updateProps?: (key: any, value: any) => void
     updateCustomConf?: (key: any, value: any) => void
 }
