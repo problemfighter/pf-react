@@ -22,7 +22,11 @@ export default class XyzView extends PFComponent<Props, State> {
     componentDidUpdate(prevProps: Props) {}
 
     renderUI() {
-        return <>View</>
+        return (
+            <>
+                View
+            </>
+        )
     }
 
 }
