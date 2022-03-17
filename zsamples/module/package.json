@@ -1,0 +1,13 @@
+{
+  "name": "module-name",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {},
+  "scripts": {},
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "devDependencies": {}
+}
