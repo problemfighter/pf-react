@@ -7,6 +7,7 @@ import PFHTTAuthCallback from "../processor/http/pf-http-auth-callback";
 import PFSuspenseView from "../view/pf-suspense-view";
 import PFNotFoundView from "../view/pf-not-found-view";
 import {PFHTTPCall} from "../interface/pf-mixed-interface";
+import PFCommonOperationView from "../view/pf-common-operation-view";
 
 
 const PFBeforeRenderUIView = lazy(() => import('../view/pf-before-render-ui-view'));
@@ -20,6 +21,10 @@ export default class PFAppConfig {
 
     public getBeforeRenderUIView(componentState: PFComponentState, component: any) {
         return (<PFBeforeRenderUIView componentState={componentState} component={component}/>)
+    }
+
+    public commonOperationView(appConfig?: PFAppConfig, route?: any) {
+        return (<PFCommonOperationView appConfig={appConfig} route={route}/>)
     }
 
     public getNotFoundView() {

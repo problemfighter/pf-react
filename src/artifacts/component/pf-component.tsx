@@ -11,6 +11,7 @@ import {PFHttpRequestHelper} from "./helper/pf-http-request-helper";
 import {PFUtil} from "../utils/pf-util";
 import PFStaticHolder from "../utils/pf-static-holder";
 import {SortDirection} from "../data/pf-mixed-data";
+import {PFAppContext} from "../config/pf-app-context";
 
 export default class PFComponent<P extends PFProps, S extends PFComponentState> extends PFReactComponent<P, S> {
 
@@ -23,6 +24,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     private pfComponentHelper!: PFComponentHelper
     public httpRequest!: PFHttpRequestHelper
     pageTitle!: string
+    static contextType = PFAppContext
 
 
     constructor(props: any) {
@@ -161,6 +163,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     }
 
     public showErrorFlash(message: string) {
+        this.context?.updateFlashMessage(true, PFMessageData.failed(message))
         this.setState({
                 messageData: PFMessageData.failed(message),
                 isShowFlashMessage: true
@@ -169,6 +172,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     }
 
     public showSuccessFlash(message: string) {
+        this.context?.updateFlashMessage(true, PFMessageData.success(message))
         this.setState({
                 messageData: PFMessageData.success(message),
                 isShowFlashMessage: true
@@ -177,6 +181,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     }
 
     public closeFlashMessage() {
+        this.context?.updateFlashMessage(false)
         this.setState({
                 isShowFlashMessage: false
             }
@@ -184,6 +189,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     }
 
     public showLoader() {
+        this.context?.showHideLoader(true)
         this.setState({
                 isShowLoader: true
             }
@@ -191,6 +197,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     }
 
     public hideLoader() {
+        this.context?.showHideLoader(false)
         this.setState({
                 isShowLoader: false
             }

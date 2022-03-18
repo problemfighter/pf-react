@@ -20,6 +20,7 @@ export default class PFLayoutRenderer extends PFReactComponent<LayoutRendererPro
                 <Suspense fallback={suspense}>
                     <Component route={route} appConfig={appConfig} customOperation={customOperation}/>
                 </Suspense>
+                {appConfig?.commonOperationView(appConfig, route)}
             </React.Fragment>
         )
     }
