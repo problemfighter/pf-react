@@ -4,7 +4,8 @@ import PFHTTRequest from "../processor/http/pf-http-request";
 
 export enum SortDirection {
     ascending = 'asc',
-    descending = 'desc'
+    descending = 'desc',
+    neutral = 'neutral'
 }
 
 export interface HTTPLastCalledData {
