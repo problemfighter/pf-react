@@ -49,6 +49,9 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
             }
         }
         if (title) {
+            if (this.props.appConfig?.pageTitlePostFix) {
+                title += " " + this.props.appConfig?.pageTitlePostFix
+            }
             document.title = title
         }
     }
