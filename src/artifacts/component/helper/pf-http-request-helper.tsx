@@ -133,8 +133,11 @@ export class PFHttpRequestHelper {
         return this.appConfig.getHTTPManager();
     }
 
-    private httpRequestObject(relativeURL: string): PFHTTRequest {
+    private httpRequestObject(relativeURL: string, requestConfig?: PFHTTRequest): PFHTTRequest {
         let request: PFHTTRequest = new PFHTTRequest();
+        if (requestConfig) {
+            request = requestConfig
+        }
         request.baseURL = this.appConfig.getBaseURL();
         request.url = relativeURL;
         let authCallback = this.appConfig.authCallback();
@@ -161,16 +164,16 @@ export class PFHttpRequestHelper {
         return formData
     }
 
-    public post(url: string, data: object, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public post(url: string, data: object, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.POST;
         request.requestData = data;
         let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
         this.httpManager().post(request, callback);
     }
 
-    public postMultipartFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public postMultipartFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.headers = request.headers = PFUtil.addDataToObject(request.headers, 'Content-Type', 'multipart/form-data');
         request.method = this.POST;
         request.onDownloadProgress = onUploadProgress;
@@ -179,8 +182,8 @@ export class PFHttpRequestHelper {
         this.httpManager().post(request, callback);
     }
 
-    public postFile(url: string, data: object, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public postFile(url: string, data: object, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.headers = request.headers = PFUtil.addDataToObject(request.headers, 'Content-Type', 'multipart/form-data');
         request.method = this.POST;
         request.onDownloadProgress = onUploadProgress;
@@ -197,8 +200,8 @@ export class PFHttpRequestHelper {
         this.httpManager().post(request, callback);
     }
 
-    public postFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public postFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.POST;
         request.requestData = formData;
         let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
