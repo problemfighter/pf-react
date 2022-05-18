@@ -53,8 +53,8 @@ export interface BaseInputDefinition extends InputDataDefinition {
     customValidation?: CustomValidation;
 }
 
-export interface OneOffInputDefinition extends BaseInputDefinition {
-
+export interface OnOffInputDefinition extends BaseInputDefinition {
+    sendValue?: unknown
 }
 
 export interface InputDefinition extends BaseInputDefinition {
@@ -122,7 +122,7 @@ export class FieldSpecification {
         return this
     }
 
-    public checkbox(spec: OneOffInputDefinition): FieldSpecification {
+    public checkbox(spec: OnOffInputDefinition): FieldSpecification {
         spec.type = "checkbox"
         this.fieldDefinition.set(spec.name, spec)
         return this
@@ -134,19 +134,19 @@ export class FieldSpecification {
         return this
     }
 
-    public switch(spec: OneOffInputDefinition): FieldSpecification {
+    public switch(spec: OnOffInputDefinition): FieldSpecification {
         spec.type = "switch"
         this.fieldDefinition.set(spec.name, spec)
         return this
     }
 
-    public number(spec: OneOffInputDefinition): FieldSpecification {
+    public number(spec: OnOffInputDefinition): FieldSpecification {
         spec.type = "number"
         this.fieldDefinition.set(spec.name, spec)
         return this
     }
 
-    public time(spec: OneOffInputDefinition): FieldSpecification {
+    public time(spec: OnOffInputDefinition): FieldSpecification {
         spec.type = "time"
         this.fieldDefinition.set(spec.name, spec)
         return this

@@ -1,4 +1,9 @@
-import {BaseInputDefinition, FieldSpecification, InputDataDefinition} from "../../data/pf-input-definition";
+import {
+    BaseInputDefinition,
+    FieldSpecification,
+    InputDataDefinition,
+    OnOffInputDefinition
+} from "../../data/pf-input-definition";
 import {PFUtil} from "../../utils/pf-util";
 import {ParentActionCaller, PFInputEvent} from "../../interface/pf-mixed-interface";
 import {PFMessageData, Status} from "../../data/pf-message-data";
@@ -140,15 +145,30 @@ export class PFComponentHelper {
             const target = event.target;
             const name = target.name;
             let value;
+            let isDeleteValue = false
             if (target.type === 'file') {
                 value = this.getFilesFromInput(name, target);
             } else if (target.type === 'checkbox') {
-                value = target.checked;
+                if (target.checked) {
+                    let inputDefinition: OnOffInputDefinition | undefined = this.fieldSpecification.getDefByName(name)
+                    if (inputDefinition && inputDefinition.sendValue !== undefined && inputDefinition.sendValue !== null) {
+                        value = inputDefinition.sendValue
+                    } else {
+                        value = target.checked;
+                    }
+                } else {
+                    isDeleteValue = true
+                }
             } else {
                 value = target.value;
             }
             _this.removeValidationError(name);
-            _this.updateFormData(name, value)
+            if (isDeleteValue) {
+                _this.removeDataFromFormData(name)
+                _this.notifyComponentChange()
+            } else {
+                _this.updateFormData(name, value)
+            }
             _this.fireInputEvent(_this.getInputEvent(name, "changeEvent"), event)
         }
         return inputAttributes
