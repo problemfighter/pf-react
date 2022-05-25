@@ -1,8 +1,11 @@
 import PFReactComponent from "./pf-react-component";
 import {PFProps, PFState} from "../interface/pf-mixed-interface";
 import PFAppConfig from "../config/pf-app-config";
-import {PFAppContext, PFAppContextProps} from "../config/pf-app-context";
+import {DynamicAction, PFAppContext, PFAppContextProps} from "../config/pf-app-context";
 import {PFMessageData} from "../data/pf-message-data";
+import PFBrowserStorageManager from "../manager/pf-browser-storage-manager";
+import {PFReactConst} from "../common/pf-react-const";
+import PFContextHelper from "./helper/pf-context-helper";
 
 interface PFContextProps extends PFProps {
     appConfig: PFAppConfig;
@@ -61,6 +64,19 @@ export default class PFContextComponent extends PFReactComponent<PFContextProps,
             }
             _this.showHideLoader(isShow)
         }
+
+        let updateDynamicAction = _this.state.contextProps.updateDynamicAction
+        _this.state.contextProps.updateDynamicAction = (key: string, value: DynamicAction) => {
+            if (updateDynamicAction) {
+                updateDynamicAction(key, value)
+            }
+            _this.addToDynamicAction(key, value)
+        }
+
+        _this.state.contextProps.loadDynamicAction = () => {
+            _this.loadDynamicAction()
+        }
+        _this.loadDynamicAction()
     }
 
     updatePropsValue(key: any, value: any) {
@@ -82,6 +98,18 @@ export default class PFContextComponent extends PFReactComponent<PFContextProps,
             newContextProps.messageData = messageData
             return {contextProps: newContextProps}
         })
+    }
+
+    private addToDynamicAction(key: string, value: DynamicAction) {
+        let dynamicAction = PFContextHelper.addToDynamicAction(key, value)
+        this.updatePropsValue("dynamicAction", dynamicAction)
+    }
+
+    private loadDynamicAction() {
+        let dynamicAction = PFBrowserStorageManager.getAsJSON(PFReactConst.CONTEXT_DYNAMIC_ACTION)
+        if (dynamicAction) {
+            this.updatePropsValue("dynamicAction", dynamicAction)
+        }
     }
 
 

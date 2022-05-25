@@ -1,0 +1,3 @@
+export const PFReactConst = {
+    CONTEXT_DYNAMIC_ACTION: "CONTEXT_DYNAMIC_ACTION"
+}

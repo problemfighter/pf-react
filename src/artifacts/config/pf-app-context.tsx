@@ -1,6 +1,11 @@
 import React from "react";
 import {PFMessageData} from "../data/pf-message-data";
 
+export interface DynamicAction {
+    rowAction?: { [key: string]: any }
+    topAction?: { [key: string]: any }
+}
+
 export interface PFAppContextProps {
     appConfig?: any
     customConf?: { [key: string]: any } | null
@@ -16,6 +21,10 @@ export interface PFAppContextProps {
     isShowLoader: boolean
     isShowFlashMessage: boolean
     messageData: PFMessageData
+
+    dynamicAction?: { [key: string]: DynamicAction }
+    updateDynamicAction?: (key: string, value: DynamicAction) => void
+    loadDynamicAction?: () => void
 }
 
 const PFAppContext = React.createContext<PFAppContextProps | null>(null)
