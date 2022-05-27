@@ -25,6 +25,7 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
     public httpRequest!: PFHttpRequestHelper
     pageTitle!: string
     static contextType = PFAppContext
+    context: any
 
 
     constructor(props: any) {
