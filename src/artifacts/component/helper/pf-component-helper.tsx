@@ -177,7 +177,7 @@ export class PFComponentHelper {
     public handleOnBlurEvent(inputAttributes: any) {
         const _this = this;
         inputAttributes.onBlur = (target: any) => {
-            const name = target.name;
+            const name = inputAttributes.name;
             _this.fireInputEvent(_this.getInputEvent(name, "blurEvent"), target)
         };
         return inputAttributes
