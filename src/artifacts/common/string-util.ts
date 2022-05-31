@@ -21,4 +21,8 @@ export default class StringUtil {
         return text.replace(/[A-Z]/g, letter => char + letter);
     }
 
+    public static findReplace(text: string, find: string, replace: string) {
+        return text.replace(find, replace);
+    }
+
 }
