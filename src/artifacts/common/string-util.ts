@@ -18,11 +18,12 @@ export default class StringUtil {
     }
 
     public static camelCaseTo(text: string, char: string = "_") {
-        return text.replace(/[A-Z]/g, letter => char + letter);
+        return text.replaceAll(/[A-Z]/g, letter => char + letter);
     }
 
     public static findReplace(text: string, find: string, replace: string) {
-        return text.replace(find, replace);
+        let findRegex = new RegExp(find, 'g');
+        return text.replaceAll(findRegex, replace);
     }
 
 }
