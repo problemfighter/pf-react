@@ -62,6 +62,16 @@ export interface InputDefinition extends BaseInputDefinition {
     autoComplete?: string
 }
 
+export interface FileInputDefinition extends InputDefinition {
+    fileNames?: any
+    fileExtensions: Array<string>
+    minSize?: number
+    maxSize?: number
+    maxFiles?: number
+    isMultiple?: boolean
+    urlPrefix?: string
+}
+
 export interface TextAreaDefinition extends InputDefinition {
     rows?: string
     cols?: string
@@ -86,7 +96,7 @@ export class FieldSpecification {
         return this
     }
 
-    public file(spec: InputDefinition): FieldSpecification {
+    public file(spec: FileInputDefinition): FieldSpecification {
         spec.type = "file"
         this.fieldDefinition.set(spec.name, spec)
         return this

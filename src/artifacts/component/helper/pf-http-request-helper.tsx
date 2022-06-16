@@ -172,6 +172,18 @@ export class PFHttpRequestHelper {
         this.httpManager().post(request, callback);
     }
 
+    public postMultipartFormDataUsingData(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any, requestConfig?: PFHTTRequest): void {
+        let formData = this.convertDataObjectToFormData(data);
+        this.postMultipartFormData(
+            url,
+            formData,
+            success,
+            failed,
+            onUploadProgress,
+            requestConfig
+        )
+    }
+
     public postMultipartFormData(url: string, formData: FormData, success?: HTTPCallback, failed?: HTTPCallback, onUploadProgress?: any, requestConfig?: PFHTTRequest): void {
         let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.headers = request.headers = PFUtil.addDataToObject(request.headers, 'Content-Type', 'multipart/form-data');
