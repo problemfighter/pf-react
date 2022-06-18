@@ -166,6 +166,11 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         this.pfComponentHelper.removeDataFromFormData(name)
     }
 
+    public setValueToFromData(name: string, value: any) {
+        this.state.formData[name] = value
+        this.pfComponentHelper.setValueToFromData(name, value)
+    }
+
     public getBaseUrl(): string {
         return this.appConfig().getBaseURL();
     }

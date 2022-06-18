@@ -107,6 +107,10 @@ export class PFComponentHelper {
         }
     }
 
+    public setValueToFromData(name: string, value: any) {
+        this.state.formData[name] = value
+    }
+
     private processCustomValidation(definition: any, name: string) {
         if (definition.customValidation && definition.customValidation.validate) {
             let response: PFMessageData = definition.customValidation.validate(name, this.getValueFromFormData(name), this.state.formData);
