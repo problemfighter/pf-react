@@ -64,7 +64,7 @@ export interface InputDefinition extends BaseInputDefinition {
 
 export interface FileInputDefinition extends InputDefinition {
     fileNames?: any
-    fileExtensions: Array<string>
+    fileExtensions?: Array<string>
     minSize?: number
     maxSize?: number
     maxFiles?: number
