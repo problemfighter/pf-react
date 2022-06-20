@@ -195,7 +195,16 @@ export class PFComponentHelper {
         }
         let value = this.getValueFromFormData(name, defaultValue)
         if (value && ((value instanceof Array && value.some((item: any) => item instanceof File)) || (value instanceof File))) {
-            inputAttributes.fileNames = value
+            if (value instanceof File) {
+                inputAttributes.fileNames = value.name
+            } else {
+                inputAttributes.fileNames = []
+                value.some((item: any) => {
+                    if (item && item instanceof File) {
+                        inputAttributes.fileNames.push(item.name)
+                    }
+                })
+            }
             value = ""
         } else if (definition && definition.type && definition.type === "file") {
             inputAttributes.fileNames = value
