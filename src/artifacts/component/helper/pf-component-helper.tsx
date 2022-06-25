@@ -153,14 +153,15 @@ export class PFComponentHelper {
             if (target.type === 'file') {
                 value = this.getFilesFromInput(name, target);
             } else if (target.type === 'checkbox') {
-                if (target.checked) {
-                    let inputDefinition: OnOffInputDefinition | undefined = this.fieldSpecification.getDefByName(name)
-                    if (inputDefinition && inputDefinition.sendValue !== undefined && inputDefinition.sendValue !== null) {
-                        value = inputDefinition.sendValue
-                    } else {
-                        value = target.checked;
-                    }
-                } else {
+                let inputDefinition: OnOffInputDefinition | undefined = this.fieldSpecification.getDefByName(name)
+                let sendValue: any = undefined
+                if (inputDefinition && inputDefinition.sendValue !== undefined && inputDefinition.sendValue !== null) {
+                    sendValue = inputDefinition.sendValue
+                }
+                value = target.checked;
+                if (target.checked && sendValue !== undefined) {
+                    value = sendValue
+                } else if (sendValue !== undefined) {
                     isDeleteValue = true
                 }
             } else {
