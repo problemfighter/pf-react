@@ -21,6 +21,28 @@ export default class StringUtil {
         return text.replaceAll(/[A-Z]/g, letter => char + letter);
     }
 
+    public static splitCamelCaseToSpace(text: string) {
+        text = text.replace(/([A-Z]+)/g, " $1").replace(/([A-Z][a-z])/g, " $1");
+        text = this.containSingleSpace(text)
+        return text.trim()
+    }
+
+    public static containSingleSpace(text: string) {
+        return text.replace(/ +(?= )/g, '');
+    }
+
+    public static replaceMoreThanOneOccurrence(text: string, char: any, replace: any = undefined, regex: any = undefined) {
+        if (!regex) {
+            regex = char
+        }
+        regex += "{2,}"
+        if (!replace) {
+            replace = char
+        }
+        let re = new RegExp(regex, "g");
+        return text.replace(re, replace);
+    }
+
     public static findReplace(text: string, find: string, replace: string) {
         let findRegex = new RegExp(find, 'g');
         return text.replaceAll(findRegex, replace);
