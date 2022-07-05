@@ -106,7 +106,9 @@ export class PFHttpRequestHelper {
         this.lastCalledData = lastCall
         let callback: PFHTTCallback = {
             before: (response: PFHTTResponse) => {
-                _this.showLoader();
+                if (request.isShowLoader) {
+                    _this.showLoader();
+                }
             },
             success: (response: PFHTTResponse) => {
                 if (this.appConfig.isAuthorized(response)) {
@@ -123,7 +125,9 @@ export class PFHttpRequestHelper {
                 }
             },
             finally: () => {
-                _this.hideLoader();
+                if (request.isShowLoader) {
+                    _this.hideLoader();
+                }
             }
         };
         return callback;
@@ -220,8 +224,8 @@ export class PFHttpRequestHelper {
         this.httpManager().post(request, callback);
     }
 
-    public postJson(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public postJson(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.POST;
         if (data instanceof Map) {
             request.requestData = PFUtil.mapToObject(data);
@@ -233,8 +237,8 @@ export class PFHttpRequestHelper {
         this.httpManager().postJSON(request, callback);
     }
 
-    public putJson(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public putJson(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.PUT;
         if (data instanceof Map) {
             request.requestData = PFUtil.mapToObject(data);
@@ -246,15 +250,15 @@ export class PFHttpRequestHelper {
         this.httpManager().putJSON(request, callback);
     }
 
-    public delete(url: string, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public delete(url: string, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.DELETE;
         let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
         this.httpManager().delete(request, callback);
     }
 
-    public deleteByJson(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public deleteByJson(url: string, data: any, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.DELETE;
         if (data instanceof Map) {
             request.requestData = PFUtil.mapToObject(data);
@@ -266,16 +270,16 @@ export class PFHttpRequestHelper {
         this.httpManager().deleteJSON(request, callback);
     }
 
-    public getByParams(url: string, queryParams?: any, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public getByParams(url: string, queryParams?: any, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.params = queryParams
         request.method = this.GET;
         let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
         this.httpManager().get(request, callback);
     }
 
-    public getRequest(url: string, success?: HTTPCallback, failed?: HTTPCallback): void {
-        let request: PFHTTRequest = this.httpRequestObject(url);
+    public getRequest(url: string, success?: HTTPCallback, failed?: HTTPCallback, requestConfig?: PFHTTRequest): void {
+        let request: PFHTTRequest = this.httpRequestObject(url, requestConfig);
         request.method = this.GET;
         let callback: PFHTTCallback = this.getCallBackHandler(request, success, failed);
         this.httpManager().get(request, callback);
