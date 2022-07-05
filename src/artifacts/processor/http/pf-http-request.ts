@@ -9,6 +9,7 @@ export default class PFHTTRequest {
     public params?: any;
     public headers?: any;
     public timeoutMS: number = 60000;
+    public isShowLoader: boolean = true;
     public authCallback?: PFHTTAuthCallback;
     public onUploadProgress?: (progressEvent: any) => void;
     public onDownloadProgress?: (progressEvent: any) => void;
