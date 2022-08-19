@@ -241,8 +241,11 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         this.redirect(url);
     }
 
-    public failedRedirect(url: any, message: string) {
+    public failedRedirect(url: any, message: string, resumeUrl?: any) {
         PFStaticHolder.addMessageData(message, false);
+        if (resumeUrl) {
+            url += "?resume=" + resumeUrl
+        }
         this.redirect(url);
     }
 
