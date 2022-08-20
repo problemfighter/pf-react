@@ -57,6 +57,41 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         }
     }
 
+    public addMetaTag(attributes: object) {
+        let meta = document.createElement('meta');
+        let isFirst: boolean = true
+        let isExistingTag: boolean = false
+        Object.entries(attributes).forEach(([key, value], index) => {
+            if (isFirst) {
+                isFirst = false
+                let existingMetaTage: any = document.querySelector('meta[' + key + '="' + value + '"]')
+                if (existingMetaTage) {
+                    isExistingTag = true
+                    meta = existingMetaTage
+                }
+            }
+            meta.setAttribute(key, value)
+        });
+        if (!isExistingTag) {
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+    }
+
+    public addSocialMediaMeta(url: string, title?: string, description?: string, image?: string) {
+        if (url) {
+            this.addMetaTag({"property": "og:url", "content": url})
+        }
+        if (title) {
+            this.addMetaTag({"property": "og:title", "content": title})
+        }
+        if (description) {
+            this.addMetaTag({"property": "og:description", "content": description})
+        }
+        if (image) {
+            this.addMetaTag({"property": "og:image", "content": image})
+        }
+    }
+
     public removeFieldSpecification(...fields: any) {
         const _this = this
         if (fields) {
