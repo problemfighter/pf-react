@@ -57,6 +57,11 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         }
     }
 
+    public resetForm() {
+        this.fieldDefinition(this.fieldSpecification)
+        this.resetFormData()
+    }
+
     public addMetaTag(attributes: object) {
         let meta = document.createElement('meta');
         let isFirst: boolean = true
