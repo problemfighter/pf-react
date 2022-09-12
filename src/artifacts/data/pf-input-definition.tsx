@@ -62,6 +62,11 @@ export interface InputDefinition extends BaseInputDefinition {
     autoComplete?: string
 }
 
+export interface NumberInputDefinition extends InputDefinition {
+    min?: any
+    max?: any
+}
+
 export interface FileInputDefinition extends InputDefinition {
     fileNames?: any
     fileExtensions?: Array<string>
@@ -150,7 +155,7 @@ export class FieldSpecification {
         return this
     }
 
-    public number(spec: OnOffInputDefinition): FieldSpecification {
+    public number(spec: NumberInputDefinition): FieldSpecification {
         spec.type = "number"
         this.fieldDefinition.set(spec.name, spec)
         return this
