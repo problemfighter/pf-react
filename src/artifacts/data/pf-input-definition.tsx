@@ -186,4 +186,8 @@ export class FieldSpecification {
         return this
     }
 
+    public clearFieldDefinition() {
+        this.fieldDefinition = new Map<string, InputDataDefinition>()
+    }
+
 }
