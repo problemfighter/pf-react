@@ -184,12 +184,12 @@ export default class PFComponent<P extends PFProps, S extends PFComponentState> 
         return defaultValue
     }
 
-    public getFormData() {
+    public getFormData(message: string = "Data Validation Error") {
         if (this.pfComponentHelper.validateEachDataOfFormData()) {
             return this.state.formData
         }
         this.notifyComponentChange()
-        throw new PFException("Data Validation Error")
+        throw new PFException(message)
     }
 
     public setFormData(formData: { [key: string]: any }) {
