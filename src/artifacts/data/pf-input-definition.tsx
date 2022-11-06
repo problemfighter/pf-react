@@ -143,6 +143,12 @@ export class FieldSpecification {
         return this
     }
 
+    public radio(spec: OnOffInputDefinition): FieldSpecification {
+        spec.type = "radio"
+        this.fieldDefinition.set(spec.name, spec)
+        return this
+    }
+
     public hidden(spec: HiddenInputDefinition): FieldSpecification {
         spec.type = "hidden"
         this.fieldDefinition.set(spec.name, spec)
