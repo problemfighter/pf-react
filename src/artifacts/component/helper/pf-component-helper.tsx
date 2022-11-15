@@ -87,7 +87,7 @@ export class PFComponentHelper {
     }
 
     public getValueFromFormData(name: string, defaultValue: any = "") {
-        if (this.state.formData && this.state.formData[name]) {
+        if (this.state.formData && this.state.formData[name] !== undefined) {
             return this.state.formData[name];
         }
         return defaultValue;
@@ -129,7 +129,7 @@ export class PFComponentHelper {
         if (definitions) {
             definitions.forEach(
                 (definition: BaseInputDefinition, name: string) => {
-                    if (definition.required && !_this.getValueFromFormData(name, undefined)) {
+                    if (definition.required && _this.getValueFromFormData(name, undefined) === undefined) {
                         isValid = false;
                         _this.addValidationError(name)
                     } else if (!_this.processCustomValidation(definition, name)) {
