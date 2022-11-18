@@ -52,4 +52,10 @@ export default class StringUtil {
         return this.findReplace(text, "_", replace)
     }
 
+    public static removeSpecialCharacter(text: string, replace: string = "") {
+        if (text) {
+            text = text.replace(/[^\w\s-_]/gi, replace);
+        }
+        return text
+    }
 }
