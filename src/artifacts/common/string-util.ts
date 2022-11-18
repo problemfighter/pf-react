@@ -48,4 +48,8 @@ export default class StringUtil {
         return text.replaceAll(findRegex, replace);
     }
 
+    public static removeUnderscore(text: string, replace: string = " ") {
+        return this.findReplace(text, "_", replace)
+    }
+
 }
