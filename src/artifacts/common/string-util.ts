@@ -54,7 +54,7 @@ export default class StringUtil {
 
     public static removeSpecialCharacter(text: string, replace: string = "") {
         if (text) {
-            text = text.replace(/[^\w\s-_]/gi, replace);
+            text = text.replace(/[^\w\s-_/]/gi, replace);
         }
         return text
     }
