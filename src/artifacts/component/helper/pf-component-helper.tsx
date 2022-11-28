@@ -86,7 +86,7 @@ export class PFComponentHelper {
         this.updateFieldSpecificationValidation(name, true, true)
     }
 
-    public getValueFromFormData(name: string, defaultValue: any = "") {
+    public getValueFromFormData(name: string, defaultValue: any = undefined) {
         if (this.state.formData && this.state.formData[name] !== undefined && this.state.formData[name] !== "") {
             return this.state.formData[name];
         }
